@@ -55,6 +55,7 @@ public class CountdownTimer extends JFrame implements ActionListener {
 //		input.setPreferredSize(new Dimension(200, 50));
 //		input.setFont(new Font("Monospaced", Font.PLAIN, 20));
 		
+		
 		display = new JLabel();
 		display.setText(hoursString + ":" + minutesString + "." + secondsString);
 		display.setBounds(20, 20, 220, 60);
@@ -96,6 +97,12 @@ public class CountdownTimer extends JFrame implements ActionListener {
 				stop();
 			}
 		}
+		if (e.getSource() == reset) {
+			started = false;
+			startStop.setText("Start");
+			stop();
+			reset();
+		}
 	}
 	
 	public void start() {
@@ -107,7 +114,14 @@ public class CountdownTimer extends JFrame implements ActionListener {
 	}
 	
 	public void reset() {
-		
+		time = 0;
+		hours = 0;
+		minutes = 0;
+		seconds = 0;
+		hoursString = String.format("%02d", hours);
+		minutesString = String.format("%02d", minutes);
+		secondsString = String.format("%02d", seconds);
+		display.setText(hoursString + ":" + minutesString + "." + secondsString);
 	}
 
 }
