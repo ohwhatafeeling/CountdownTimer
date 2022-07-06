@@ -52,9 +52,9 @@ public class CountdownTimer extends JFrame implements ActionListener {
 		this.setLocationRelativeTo(null);
 		
 		input = new JFormattedTextField();
-//		input.setPreferredSize(new Dimension(200, 50));
-//		input.setFont(new Font("Monospaced", Font.PLAIN, 20));
-		
+		input.setBounds(20, 20, 220, 60);
+		input.setFont(new Font("Monospaced", Font.PLAIN, 30));
+		input.setVisible(true);
 		
 		display = new JLabel();
 		display.setText(hoursString + ":" + minutesString + "." + secondsString);
@@ -63,6 +63,7 @@ public class CountdownTimer extends JFrame implements ActionListener {
 		display.setHorizontalAlignment(JLabel.CENTER);
 		display.setBackground(Color.yellow);
 		display.setOpaque(true);
+		display.setVisible(false);
 		
 		startStop = new JButton("Start");
 		startStop.setBounds(20, 100, 100, 50);
@@ -77,7 +78,7 @@ public class CountdownTimer extends JFrame implements ActionListener {
 		reset.addActionListener(this);
 		
 		this.add(display);
-//		this.add(input);
+		this.add(input);
 		this.add(startStop);
 		this.add(reset);
 		this.setVisible(true);
@@ -89,6 +90,9 @@ public class CountdownTimer extends JFrame implements ActionListener {
 		if (e.getSource() == startStop) {
 			if (started == false) {
 				started = true;
+				input.setVisible(false);
+				display.setVisible(true);
+				time = (Integer.parseInt(input.getText())) * 1000;
 				startStop.setText("Stop");
 				start();
 			} else {
@@ -102,6 +106,9 @@ public class CountdownTimer extends JFrame implements ActionListener {
 			startStop.setText("Start");
 			stop();
 			reset();
+			display.setVisible(false);
+			input.setVisible(true);
+			input.setText("");
 		}
 	}
 	
