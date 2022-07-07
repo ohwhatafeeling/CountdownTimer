@@ -1,22 +1,23 @@
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
+import javax.swing.text.MaskFormatter;
 
 public class CountdownTimer extends JFrame implements ActionListener {
+	MaskFormatter mfInput;
 	JFormattedTextField input;
 	JLabel display;
 	JButton startStop;
 	JButton reset;
-	int time = 10000;
+	int time = 0;
 	int hours = 0;
 	int minutes = 0;
 	int seconds = 0;
@@ -51,7 +52,15 @@ public class CountdownTimer extends JFrame implements ActionListener {
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
 		
-		input = new JFormattedTextField();
+		try {
+			mfInput = new MaskFormatter("##:##.##");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mfInput.setPlaceholderCharacter('0');
+		
+		input = new JFormattedTextField(mfInput);
 		input.setBounds(20, 20, 220, 60);
 		input.setFont(new Font("Monospaced", Font.PLAIN, 30));
 		input.setVisible(true);
@@ -92,7 +101,7 @@ public class CountdownTimer extends JFrame implements ActionListener {
 				started = true;
 				input.setVisible(false);
 				display.setVisible(true);
-				time = (Integer.parseInt(input.getText())) * 1000;
+				time = inputStringToInt(input.getText());
 				startStop.setText("Stop");
 				start();
 			} else {
@@ -129,6 +138,13 @@ public class CountdownTimer extends JFrame implements ActionListener {
 		minutesString = String.format("%02d", minutes);
 		secondsString = String.format("%02d", seconds);
 		display.setText(hoursString + ":" + minutesString + "." + secondsString);
+	}
+	
+	public int inputStringToInt(String input) {
+		int hours = (Integer.parseInt(input.substring(0, 2))) * 3600000;
+		int minutes = (Integer.parseInt(input.substring(3, 5))) * 60000;
+		int seconds = (Integer.parseInt(input.substring(6, 8))) * 1000;
+		return hours + minutes + seconds;
 	}
 
 }
