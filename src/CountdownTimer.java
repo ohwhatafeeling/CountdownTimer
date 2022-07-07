@@ -35,6 +35,7 @@ public class CountdownTimer extends JFrame implements ActionListener {
 			minutesString = String.format("%02d", minutes);
 			secondsString = String.format("%02d", seconds);
 			display.setText(hoursString + ":" + minutesString + "." + secondsString);
+			input.setText(hoursString + ":" + minutesString + "." + secondsString);
 			if (time == 0 ) {
 				timer.stop();
 				display.setText("Finished");
