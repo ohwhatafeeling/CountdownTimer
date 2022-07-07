@@ -1,14 +1,11 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.Timer;
+import javax.sound.sampled.*;
+import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
 public class CountdownTimer extends JFrame implements ActionListener {
@@ -39,6 +36,7 @@ public class CountdownTimer extends JFrame implements ActionListener {
 			if (time == 0 ) {
 				timer.stop();
 				display.setText("Finished");
+				playSound();
 			}
 			time -= 1000;
 		}
@@ -146,6 +144,24 @@ public class CountdownTimer extends JFrame implements ActionListener {
 		int minutes = (Integer.parseInt(input.substring(3, 5))) * 60000;
 		int seconds = (Integer.parseInt(input.substring(6, 8))) * 1000;
 		return hours + minutes + seconds;
+	}
+	
+	public void playSound() {
+		try {
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File("sfx-defeat1.wav"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioStream);
+			clip.start();
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
